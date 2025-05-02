@@ -1,0 +1,6 @@
+flask
+gunicorn
+flask-socketio
+flask-cors
+Pillow
+requests
