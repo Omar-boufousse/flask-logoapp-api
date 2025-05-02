@@ -1,11 +1,6 @@
 flask
-werkzeug
-pillow
-requests
+gunicorn
 flask-socketio
-python-engineio
-python-socketio
-eventlet
-gunicorn==21.2.0
-eventlet==0.35.1
-flask-socketio==5.3.6
+flask-cors
+Pillow
+requests
