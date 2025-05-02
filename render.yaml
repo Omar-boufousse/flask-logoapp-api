@@ -2,6 +2,11 @@ services:
   - type: web
     name: flask-logoapp-api
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
-
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --worker-class eventlet -w 1 --timeout 120 app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: WEBSOCKET_ENABLED
+        value: "true"
