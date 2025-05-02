@@ -2,7 +2,7 @@ flask
 werkzeug
 pillow
 requests
-python-dotenv
 flask-socketio
-gunicorn
 eventlet
+gunicorn
+python-dotenv
