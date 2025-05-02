@@ -2,6 +2,6 @@ services:
   - type: web
     name: flask-logoapp-api
     env: python
-    plan: free
-    buildCommand: ""
-    startCommand: gunicorn app:start --worker-class eventlet -w 1 -b 0.0.0.0:$PORT
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+
