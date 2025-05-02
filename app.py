@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify, Response
-from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.utils import secure_filename
 from PIL import Image
 from io import BytesIO
@@ -13,20 +12,16 @@ from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 
 app = Flask(__name__)
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)  # <-- Configuration proxy
-
-app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'bmp', 'tiff', 'webp'}
 app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
-
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max
 
 # CORS and SocketIO configuration
 CORS(app)
-socketio = SocketIO(app, async_mode='threading', cors_allowed_origins="*")
+socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins="*")
 
 # Logo URLs
 LOGO_URL = 'https://ilumilamp.net/wp-content/uploads/2025/01/cropped-logo_ilumi.png'
@@ -200,4 +195,5 @@ def download_files(upload_id):
     return response
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, host='0.0.0.0', port=port)
