@@ -1,6 +1,7 @@
 flask
-gunicorn
 flask-socketio
 flask-cors
-Pillow
+pillow
 requests
+gunicorn
+eventlet
