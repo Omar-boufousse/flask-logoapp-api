@@ -345,28 +345,43 @@
                     updateFileInfo(this.files);
                 }
             });
-            
+
             function updateFileInfo(files) {
-                fileListContainer.style.display = 'block';
-                selectedFilesList.innerHTML = '';
-                
-                let totalSize = 0;
-                
-                for (let i = 0; i < files.length; i++) {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.textContent = files[i].name;
-                    selectedFilesList.appendChild(li);
-                    totalSize += files[i].size;
-                }
-                
-                fileInfo.innerHTML = `
-                    <strong>File count:</strong> ${files.length}<br>
-                    <strong>Total size:</strong> ${formatFileSize(totalSize)}
-                `;
-                
-                processBtn.disabled = false;
-            }
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+    fileListContainer.style.display = 'block';
+    selectedFilesList.innerHTML = '';
+    let totalSize = 0;
+    let valid = true;
+
+    for (let i = 0; i < files.length; i++) {
+        if (!allowedTypes.includes(files[i].type)) {
+            showStatus(`File type not allowed: ${files[i].name}`, 'error');
+            valid = false;
+            break;
+        }
+
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = files[i].name;
+        selectedFilesList.appendChild(li);
+        totalSize += files[i].size;
+    }
+
+    if (!valid) {
+        processBtn.disabled = true;
+        return;
+    }
+
+    fileInfo.innerHTML = `
+        <strong>File count:</strong> ${files.length}<br>
+        <strong>Total size:</strong> ${formatFileSize(totalSize)}
+    `;
+    
+    processBtn.disabled = false;
+}
+
+          
             
             function formatFileSize(bytes) {
                 if (bytes === 0) return '0 Bytes';
