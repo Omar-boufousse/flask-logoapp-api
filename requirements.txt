@@ -1,8 +1,7 @@
 flask
-werkzeug
-pillow
-requests
-flask-socketio
-eventlet
 gunicorn
-python-dotenv
+flask-socketio
+flask-cors
+Pillow
+requests
+
