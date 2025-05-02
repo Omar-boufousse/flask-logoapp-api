@@ -21,7 +21,9 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max
 
 # CORS and SocketIO configuration
 CORS(app)
-socketio = SocketIO(app, async_mode='threading', cors_allowed_origins="*")
+
+socketio = SocketIO(app,cors_allowed_origins="*",async_mode='eventlet')   
+                 
 
 # Logo URLs
 LOGO_URL = 'https://ilumilamp.net/wp-content/uploads/2025/01/cropped-logo_ilumi.png'
