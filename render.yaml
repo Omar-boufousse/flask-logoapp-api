@@ -4,4 +4,4 @@ services:
     env: python
     plan: free
     buildCommand: ""
-    startCommand: gunicorn app:app
+    startCommand: gunicorn app:start --worker-class eventlet -w 1 -b 0.0.0.0:$PORT
