@@ -21,8 +21,7 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max
 
 # CORS and SocketIO configuration
 CORS(app)
-socketio = SocketIO(app, async_mode='threading', cors_allowed_origins="*")
- 
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
                  
 
 # Logo URLs
@@ -92,9 +91,7 @@ def process_images(folder_path, logo_url, callback=None):
 
 @app.route('/')
 def index():
-    # Add parameter to detect if in iframe
-    is_iframe = request.args.get('iframe', False)
-    return render_template('index.html', is_iframe=is_iframe)
+    return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_files():
@@ -197,5 +194,6 @@ def download_files(upload_id):
     return response
     
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=port, debug=True)  # debug=True
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, host='0.0.0.0', port=port)
 
