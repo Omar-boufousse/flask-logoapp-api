@@ -22,7 +22,10 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max
 # CORS and SocketIO configuration
 CORS(app)
 
-socketio = SocketIO(app,cors_allowed_origins="*",async_mode='eventlet')   
+socketio = SocketIO(app, 
+                  cors_allowed_origins="*",
+                  async_mode='eventlet')  
+ 
                  
 
 # Logo URLs
