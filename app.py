@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify, Response
+from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.utils import secure_filename
 from PIL import Image
 from io import BytesIO
@@ -10,6 +11,9 @@ import os
 import shutil
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
+
+app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)  # <-- Configuration proxy
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -195,5 +199,5 @@ def download_files(upload_id):
     
     return response
 
-def start():
-    socketio.run(app, host='0.0.0.0', port=10000)
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=5000)
