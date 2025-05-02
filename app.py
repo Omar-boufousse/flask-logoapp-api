@@ -194,5 +194,5 @@ def download_files(upload_id):
     
     return response
 
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8000, debug=True)
+def start():
+    socketio.run(app, host='0.0.0.0', port=10000)
