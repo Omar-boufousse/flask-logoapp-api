@@ -396,24 +396,24 @@
                 // Send files
                 const formData = new FormData();
                 for (let i = 0; i < fileUpload.files.length; i++) {
-                    formData.append('files', fileUpload.files[i]);
+                formData.append('images', fileUpload.files[i]);
                 }
-                
-                fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                }).then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        showStatus(data.error, 'error');
-                        resetInterface();
-                    }
-                })
-                .catch(error => {
-                    showStatus('Error sending files', 'error');
-                    resetInterface();
-                });
-            });
+
+               fetch('/upload', {
+               method: 'POST',
+               body: formData
+               })
+               .then(response => response.json())
+               .then(data => {
+               if (data.upload_id) {
+               uploadId = data.upload_id;
+               }
+               })
+               .catch(error => {
+               showStatus('Upload failed: ' + error.message, 'error');
+               resetInterface();
+               });
+               });
             
             // "Download images" button
             downloadBtn.addEventListener('click', function() {
