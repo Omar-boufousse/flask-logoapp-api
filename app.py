@@ -193,7 +193,8 @@ def download_files(upload_id):
     threading.Thread(target=cleanup).start()
     
     return response
-
+    
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    socketio.run(app, host='0.0.0.0', port=port)
+    port = int(os.environ.get("PORT", 5000))  # <-- Modifiez cette ligne
+    socketio.run(app, host='0.0.0.0', port=port)  # <-- Utilisez la variable port
+
